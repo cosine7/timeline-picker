@@ -31,6 +31,7 @@ export default observer(({ ID }) => {
   const [dragging, setDragging] = useState()
   const [movingPosition, setMovingPosition] = useState()
   const [force, forceUpdate] = useState({})
+  const [maxColumn, setMaxColumn] = useState(0)
   const container = useRef()
 
   const onClickCell = useCallback(id => e => {
@@ -50,13 +51,21 @@ export default observer(({ ID }) => {
     return () => window.removeEventListener('resize', update)
   }, [])
 
-  const maxColumn = useMemo(() => {
+  useLayoutEffect(() => {
     if (!container.current) {
       return 0
     }
     const containerRect = container.current.getBoundingClientRect()
-    return Math.floor((containerRect.width - 100) / 100) * 2 + 1
+    setMaxColumn(Math.floor((containerRect.width - 100) / 100) * 2 + 1)
   }, [container.current, force])
+
+  // const maxColumn = useMemo(() => {
+  //   if (!container.current) {
+  //     return 0
+  //   }
+  //   const containerRect = container.current.getBoundingClientRect()
+  //   return Math.floor((containerRect.width - 100) / 100) * 2 + 1
+  // }, [container.current, force])
 
   const onDragRight = useCallback(e => {
     e.stopPropagation()
@@ -145,7 +154,7 @@ export default observer(({ ID }) => {
     setDragging({ top: currentTop, left: currentLeft })
     document.addEventListener('mousemove', onMouseMove)
     document.addEventListener('mouseup', onMouseUp, { once: true })
-  }, [store.startHour, store.endHour, container, store.rangeStart, store.moving])
+  }, [store.startHour, store.endHour, container, store.rangeStart, store.moving, maxColumn])
 
   const onDragLeft = useCallback(e => {
     e.stopPropagation()
@@ -228,7 +237,7 @@ export default observer(({ ID }) => {
     setDragging({ top: currentTop, left: currentLeft })
     document.addEventListener('mousemove', onMouseMove)
     document.addEventListener('mouseup', onMouseUp, { once: true })
-  }, [store.startHour, store.endHour, container, store.rangeEnd, store.moving])
+  }, [store.startHour, store.endHour, container, store.rangeEnd, store.moving, maxColumn])
 
   const onMouseDown = useCallback(e => {
     e.stopPropagation()
@@ -286,7 +295,7 @@ export default observer(({ ID }) => {
     for (let i = store.startHour; i < store.endHour; i++) {
       const parts = { left: i, right: i + 0.5 }
       const trailing = !!maxColumn && ((i + 0.5 - store.startHour) * 2 + 1) % (maxColumn - 1) === 0
-console.log(trailing);
+
       items.push(
         <div className={classes({ part: true, trailing })} key={i}>
           <p>{`${i}:00`}</p>
