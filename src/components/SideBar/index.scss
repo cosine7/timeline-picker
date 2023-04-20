@@ -1,0 +1,34 @@
+.sidebar {
+  width: 350px;
+  height: 100%;
+  background-color: white;
+
+  .input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px;
+
+    p {
+      font-weight: bold;
+    }
+
+    input {
+      height: 30px;
+      width: 150px;
+      outline: none;
+      border: 1px solid #b1b3b8;
+      border-radius: 8px;
+      padding: 0 10px;
+      transition: all .3s;
+
+      &:hover {
+        border-color: #909399;
+      }
+
+      &:focus {
+        border-color: #409EFF;
+      }
+    }
+  }
+}

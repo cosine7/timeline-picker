@@ -1,0 +1,164 @@
+
+.timeline-picker {
+  display: flex;
+  background-color: white;
+  margin: 40px;
+  border-radius: 8px;
+  padding: 0 50px;
+  flex-wrap: wrap;
+  position: relative;
+
+  p {
+    color: #666;
+    transform: translate(-50%);
+    position: absolute;
+    top: 5%;
+    left: 0;
+    font-size: 14px;
+    user-select: none;
+    z-index: 9999;
+  }
+
+  .part {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    padding: 25px 0;
+
+    .left, .right {
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      position: relative;
+
+      &:hover {
+        background-color: #ecf5ff;
+      }
+
+      &.selected {
+        background-color: #79bbff;
+
+        &.moving {
+          background-color: #c6e2ff;
+        }
+      }
+    }
+
+    .left::before {
+      content: '';
+      background-color: #666;
+      width: 1px;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform: translate(-50%);
+    }
+
+    .right::before {
+      content: '';
+      background-color: #666;
+      width: 1px;
+      height: 50%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform: translate(-50%);
+    }
+
+    &.trailing::after {
+      content: '';
+      background-color: #666;
+      width: 1px;
+      height: 50%;
+      position: absolute;
+      right: 0;
+      bottom: 25%;
+      transform: translate(50%);
+    }
+
+    .last {
+      right: 0;
+      left: auto;
+      transform: translate(50%);
+    }
+
+    &:last-child .right::after {
+      content: '';
+      background-color: #666;
+      width: 1px;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translate(50%);
+    }
+  }
+
+  .range {
+    z-index: 999;
+    position: absolute;
+    background-color: aquamarine;
+
+    .left, .right {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: white;
+      border: 2px solid aquamarine;
+      top: 50%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .25);
+      cursor: ew-resize;
+    }
+    
+    .left {
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    .right {
+      right: 0;
+      transform: translate(50%, -50%);
+    }
+  }
+
+  .resize-btn-left, .resize-btn-right {
+    position: absolute;
+    top: 0;
+    width: 4px;
+    background-color: #337ecc;
+    height: 100%;
+    cursor: ew-resize;
+    z-index: 99;
+  }
+
+  .resize-btn {
+    &-left {
+      left: 0;
+      transform: translate(-50%);
+    }
+
+    &-right {
+      right: 0;
+      transform: translate(50%);
+    }
+  }
+
+  .dragging-line {
+    position: absolute;
+    height: 100px;
+    width: 4px;
+    background-color: #F56C6C;
+    z-index: 999;
+    cursor: ew-resize;
+    transform: translate(-50%);
+  }
+}
+
+.moving-bar {
+  position: fixed;
+  background-color: #a0cfff;
+  pointer-events: none;
+  opacity: .5;
+}
