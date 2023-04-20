@@ -285,8 +285,8 @@ export default observer(({ ID }) => {
 
     for (let i = store.startHour; i < store.endHour; i++) {
       const parts = { left: i, right: i + 0.5 }
-      const trailing = maxColumn && ((i + 0.5 - store.startHour) * 2 + 1) % (maxColumn - 1) === 0
-
+      const trailing = !!maxColumn && ((i + 0.5 - store.startHour) * 2 + 1) % (maxColumn - 1) === 0
+console.log(trailing);
       items.push(
         <div className={classes({ part: true, trailing })} key={i}>
           <p>{`${i}:00`}</p>
